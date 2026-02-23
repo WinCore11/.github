@@ -1,88 +1,80 @@
+<p align="center">
+  <img src="assets/wincore11-logo.png" width="128" alt="WinCore 11 Logo">
+</p>
+
 # WinCore 11
 
-[![Version 1 Release (Latest)](https://img.shields.io/badge/Version-1.0.0%20Latest-0078D4?style=for-the-badge&logo=github&logoColor=white)](https://github.com/WinCore11)
-[![Download autounattend.xml](https://img.shields.io/badge/⬇%20Download-autounattend.xml-107C10?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/WinCore11/.github/raw/main/profile/autounattend.xml)
+## Download
 
-## Introduction
+<p align="center">
 
-Welcome to **WinCore 11**. This repository provides a highly optimized unattended Windows installation file (`autounattend.xml`) designed to automate setup, remove unnecessary bloatware, and apply advanced system and network tweaks for maximum performance.
+[![Download autounattend.xml](https://img.shields.io/badge/⬇%20Download-autounattend.xml-107C10?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/WinCore11/WinCore11-Build/releases/latest/download/autounattend.xml)
+
+[![Version v1.0.0 (Latest)](https://img.shields.io/badge/Version-1.0.0%20Latest-0078D4?style=for-the-badge&logo=github&logoColor=white)](https://github.com/WinCore11/WinCore11-Build/releases/latest)
+
+</p>
+
+## 🖼️ Before / After
+
+| Stock Windows 11 | WinCore 11 Edition |
+|------------------|-------------------|
+| <img src="assets/win11-orijinal.jpg" width="500"> | <img src="assets/win11-wincore11-edition.jpg" width="500"> |
+
+WinCore 11 leverages Microsoft's [Answer Files](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/update-windows-settings-and-scripts-create-your-own-answer-file-sxs?view=windows-11) to automate and fine-tune Windows 11 installations. It strips bloatware, applies system-level optimizations, and preserves the features that actually matter for daily use all without touching unofficial ISOs.
 
 </br>
 
 > [!NOTE]
-> This specific optimizer has been heavily engineered exclusively for the **WinCore 11** experience. We focused intensely on preserving essential daily functionalities (like touchscreens, Microsoft Store, and Xbox/Minecraft compatibility) while maximizing raw system responsiveness and gaming performance.
+> WinCore 11 is engineered with a specific philosophy: **maximum performance without sacrificing usability.** Xbox/Minecraft compatibility, touchscreen support, Microsoft Store, and biometric login are deliberately preserved. This is not a "nuke everything" script.
 
-## Acknowledgements
+## What Does WinCore 11 Do?
 
-The foundation of this project comes from the excellent work done by **[memstechtips](https://github.com/memstechtips)** in their **UnattendedWinstall** project. We have built upon their solid base file to provide additional bug fixes, network optimizations, and compatibility adjustments exclusively tailored for the **WinCore 11** brand.
+### Core Optimizations
 
-## Key Changes & Fixes
+- **Bypasses Windows 11 system requirements** — TPM, Secure Boot, CPU and RAM checks.
+- **Skips Microsoft account creation** during setup. Local account only.
+- **Privacy & Security** — All telemetry, tracking, and advertising fully disabled.
+- **Power Settings** — Winhance Power Plan applied for peak performance.
+- **Bloatware Removal** — Copilot, OneDrive, sponsored apps, and junk services removed.
+- **Windows Updates** — Auto-updates disabled; notifies only when updates are available.
+- **Dark Mode** — Enabled on first login. All unwanted Start Menu pins removed.
+- **Clean Explorer** — Classic right-click menu, file extensions visible, nav pane decluttered.
 
-While the core functionality inherits from `memstechtips`, we found and resolved several issues to ensure broader compatibility (e.g., keeping Minecraft and Xbox related apps functional) and better network/system performance.
+### WinCore 11 Exclusive Changes
 
-Here is the comprehensive list of the 21 major improvements and changes made in this optimized version:
-
-1. **Microsoft Edge is Retained**
-   - Removed the `EdgeRemoval.ps1` script creation block (~570 lines) and its execution call. Edge is no longer removed.
-2. **Xbox Packages Kept (Minecraft Compatibility)**
-   - Removed `GamingApp`, `XboxApp`, `XboxIdentityProvider`, `XboxGameOverlay`, `Xbox.TCUI`, and `XboxGamingOverlay` from the bloatware package removal list. This ensures Minecraft and core Xbox gaming services function correctly right out of the box.
-3. **SystemResponsiveness Bug Fix**
-   - Corrected value from `10` -> `4294967295` (restoring the default Windows value which resolves the responsiveness bug).
-4. **NetworkThrottlingIndex Disabled**
-   - Changed from `10` -> `4294967295` to completely disable network throttling for unrestricted network throughput.
-5. **Smart PowerThrottlingOff (Device Dependent)**
-   - Now utilizes a `Win32_Battery` WMI query. `PowerThrottlingOff` is gracefully skipped on laptops to preserve battery life but explicitly applied on desktops and batteryless devices for maximum performance.
-6. **Faster Shutdown Speeds**
-   - Set `ClearPageFileAtShutdown = 0`. The page file is no longer deleted upon shutting down, leading to significantly faster shutdown times.
-7. **Proper LUA (UAC) Sequencing**
-   - Set `EnableLUA = 1`. This value is now correctly applied at the very end of the installation process, ensuring all other system configuration scripts complete successfully without User Account Control (UAC) interference. Re-enabling UAC (`1`) at the end specifically fixes a known bug where drag-and-drop functionality between applications breaks when LUA is left entirely disabled (`0`).
-8. **TcpAckFrequency Optimization**
-   - Changed from `2` -> `1`. An advanced network optimization that disables Nagle's algorithm for lower latency.
-9. **TCPNoDelay Enabled**
-   - Changed from `0` -> `1` to eliminate delay in TCP communication.
-10. **TcpDelAckTicks Disabled**
-    - Newly added setting configuring `TcpDelAckTicks = 0`, which turns off the delayed ACK timer for faster packet acknowledgment.
-11. **File Explorer "This PC" Default for All Users**
-    - Injected `LaunchTo = 1` into the `DefaultUser` registry hive block. This ensures that File Explorer opens to "This PC" instead of "Home" or "Quick Access" for all newly created users on the system.
-12. **Start Menu Centered (Windows 11 Default)**
-    - Changed `TaskbarAl = 0` (left-aligned) -> `1` (Windows 11 default, center alignment).
-13. **Microsoft Store is Retained**
-    - The Microsoft Store is explicitly kept during the optimized setup, ensuring full access to Store apps and updates without manual reinstallation.
-14. **Windows Photos App is Retained**
-    - The default modern Windows Photos app is no longer removed and the legacy Windows Photo Viewer registry hacks have been omitted, keeping the native experience intact.
-15. **User Convenience Features Kept Active**
-    - Options to "Sleep" and "Lock" the computer from the Start Menu are retained, and the `Win+L` locking shortcut remains enabled for daily user convenience.
-16. **Background Apps Kept Active**
-    - The `LetAppsRunInBackground` registry tweak was removed to ensure modern (UWP) apps like WhatsApp, Mail, and Spotify continue to act normally and receive notifications while minimized.
-17. **Taskbar System Tray Overflow Kept Active**
-    - The `EnableAutoTray` tweak was removed to prevent the taskbar from becoming cluttered. All background app icons (like Steam, Spotify, etc.) are properly neatly hidden inside the system tray overflow menu (up arrow).
-18. **Taskbar Icons Kept Default Size**
-    - Removed the `TaskbarSmallIcons` registry tweak. This setting is completely unsupported in Windows 11 and causes graphical corruption/overlapping issues on the taskbar if applied.
-19. **Touch, Biometrics & Sensors Kept Active**
-    - Removed `WbioSrvc` (Windows Hello / Fingerprint), `TabletInputService` (Touchscreen / Pen), and Sensor service disablers entirely from the script. This ensures touch monitors, drawing tablets, and biometric peripherals work seamlessly out of the box on all systems, without relying on flawed driver or battery checks.
-20. **Restored Premium UI Animations**
-    - Replaced the overly aggressive `UserPreferencesMask` visual effects tweaks with a balanced user-provided configuration. Menus, taskbar interactions, and window minimizing/maximizing transitions are kept smooth instead of feeling instantly teleported/broken, maintaining a premium fast experience.
-21. **Essential First-Party Apps Retained**
-    - `Mail and Calendar`, `Windows Alarms & Clock`, and `Windows Camera` were removed from the BloatRemoval script list. This ensures normal daily PC functionality remains available right out of the box without forcing the user to re-download basic tools (e.g. for testing their laptop camera).
-
-## Core Features (Inherited from Original)
-
-In addition to the WinCore 11 optimizations above, this configuration still provides the foundational benefits of a fully debloated Windows installation layout:
-
-- **Bypasses Windows 11 system requirements** (TPM, Secure Boot, CPU, RAM).
-- **Skips forced Microsoft account creation** during Windows setup.
-- **Privacy & Security**: Disables all telemetry, tracking, and advertising.
-- **Power Settings**: Injects the Winhance Power Plan for optimal performance.
-- **Bloatware Removal**: Strips out Copilot, OneDrive, pre-installed sponsor apps, and unnecessary default services.
-- **Windows Updates**: Disables forced auto-updates and configures Windows Update to only notify.
-- **Customization & Dark Theme**: Enables Windows Dark Mode instantly on first login, and unpins all unwanted icons from the start menu.
-- **Clean Explorer**: Restores the Classic Context Menu (Right Click), shows file extensions by default, and declutters the navigation pane inside File Explorer.
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | **Edge Retained** | EdgeRemoval script omitted entirely |
+| 2 | **Xbox & Minecraft Compatible** | GamingApp, XboxApp, TCUI and related packages kept |
+| 3 | **SystemResponsiveness Fixed** | Corrected to `4294967295` (Windows default) |
+| 4 | **Network Throttling Off** | `NetworkThrottlingIndex` set to `4294967295` |
+| 5 | **Smart Power Throttling** | Skipped on laptops, applied on desktops via WMI battery check |
+| 6 | **Faster Shutdown** | Page file no longer cleared at shutdown |
+| 7 | **UAC Sequencing Fixed** | LUA re-enabled at end of setup to prevent drag-and-drop breakage |
+| 8 | **TcpAckFrequency** | Set to `1` — Nagle's algorithm disabled for lower latency |
+| 9 | **TCPNoDelay** | Enabled for faster TCP communication |
+| 10 | **TcpDelAckTicks** | Set to `0` — delayed ACK timer disabled |
+| 11 | **File Explorer Default** | Opens to "This PC" for all users via DefaultUser hive |
+| 12 | **Start Menu Centered** | `TaskbarAl = 1` — Windows 11 default center alignment |
+| 13 | **Microsoft Store Kept** | Store preserved for app access and updates |
+| 14 | **Windows Photos Kept** | Modern Photos app retained; legacy viewer hacks removed |
+| 15 | **Sleep & Lock Kept** | Start Menu sleep/lock options and Win+L shortcut preserved |
+| 16 | **Background Apps Active** | UWP apps (WhatsApp, Mail, Spotify) notify normally |
+| 17 | **System Tray Overflow Kept** | Background icons hidden in tray, not cluttering the taskbar |
+| 18 | **Taskbar Icon Size Default** | `TaskbarSmallIcons` removed — causes graphical bugs on Win11 |
+| 19 | **Touch & Biometrics Active** | WbioSrvc and TabletInputService left enabled for all devices |
+| 20 | **Smooth UI Animations** | Balanced `UserPreferencesMask` — transitions feel premium, not broken |
+| 21 | **Essential Apps Kept** | Mail & Calendar, Alarms & Clock, Camera retained out of the box |
 
 ## Usage
 
-> [!IMPORTANT]  
-> Ensure the answer file downloaded remains named exactly `autounattend.xml`; otherwise, it won't be recognized by the Windows Installer and the process will not be automated.
+> [!IMPORTANT]
+> The file **must** be named exactly `autounattend.xml`. Any other name will be ignored by the Windows installer.
 
-1. Download or copy the included `autounattend.xml` file.
-2. Place `autounattend.xml` at the root of your bootable Windows 10 or Windows 11 installation USB drive.
-3. Boot from the USB and install Windows as usual. The setup will automatically read the file, bypass most of the installation prompts, and apply all WinCore 11 optimizations seamlessly.
+1. Download `autounattend.xml` using the button above.
+2. Place it at the **root** of your bootable Windows 10 or Windows 11 USB drive.
+3. Boot from the USB and install Windows normally. Setup will handle the rest automatically.
+
+## Acknowledgements
+
+Built on top of the outstanding work by **[memstechtips](https://github.com/memstechtips)** and the **[UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall)** project. WinCore 11 extends that foundation with compatibility fixes, network tuning, and a usability-first philosophy.
