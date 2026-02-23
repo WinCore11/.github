@@ -4,6 +4,8 @@
 
 # WinCore 11
 
+<img src="assets/no-ai-slop.jpg" width="1000">
+
 ## Download
 
 <p align="center">
@@ -14,11 +16,15 @@
 
 </p>
 
+
+
 ## 🖼️ Before / After
 
 | Stock Windows 11 | WinCore 11 Edition |
 |------------------|-------------------|
 | <img src="assets/win11-orijinal.jpg" width="500"> | <img src="assets/win11-wincore11-edition.jpg" width="500"> |
+
+
 
 WinCore 11 leverages Microsoft's [Answer Files](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/update-windows-settings-and-scripts-create-your-own-answer-file-sxs?view=windows-11) to automate and fine-tune Windows 11 installations. It strips bloatware, applies system-level optimizations, and preserves the features that actually matter for daily use all without touching unofficial ISOs.
 
